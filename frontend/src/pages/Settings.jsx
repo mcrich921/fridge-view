@@ -18,11 +18,29 @@ function Settings() {
     fetchSettings();
   }, []);
 
+  // Get data headers for table and filtering
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
+
+  const filteredData = data.filter((item) => {
+    return headers.some((header) => {
+      // case-insensitive matching
+      return String(item[header]).toLowerCase().includes(filter.toLowerCase());
+    });
+  });
 
   return (
     <div>
       <h1>Fridge Settings</h1>
+      <div>
+        <label htmlFor="filter">Filter:</label>
+        <input
+          type="text"
+          id="filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Search by any column"
+        />
+      </div>
       <table>
         <thead>
           <tr>
@@ -32,8 +50,8 @@ function Settings() {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 ? (
-            data.map((item, rowIndex) => (
+          {filteredData.length > 0 ? (
+            filteredData.map((item, rowIndex) => (
               <tr key={rowIndex}>
                 {headers.map((header, colIndex) => (
                   <td key={colIndex}>{item[header]}</td>
