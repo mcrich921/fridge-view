@@ -4,6 +4,7 @@ import api from "../api";
 function Settings() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("");
+  const [currFilter, setCurrFilter] = useState("fridge_id");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -21,6 +22,11 @@ function Settings() {
   // Get data headers for table and filtering
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
+  // Handles change of selected column to filter
+  const handleFilterColChange = (e) => {
+    setCurrFilter(e.target.value);
+  };
+
   const filteredData = data.filter((item) => {
     return headers.some((header) => {
       // case-insensitive matching
@@ -31,6 +37,21 @@ function Settings() {
   return (
     <div>
       <h1>Fridge Settings</h1>
+      <div>
+        <label htmlFor="column-select">Select Column:</label>
+        <select
+          id="column-select"
+          value={currFilter}
+          onChange={handleFilterColChange}
+        >
+          {/* Add options to filter by all headers */}
+          {headers.map((header) => (
+            <option key={header} value={header}>
+              {header}
+            </option>
+          ))}
+        </select>
+      </div>
       <div>
         <label htmlFor="filter">Filter:</label>
         <input
