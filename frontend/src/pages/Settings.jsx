@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import "../styles/Settings.css";
 
 function Settings() {
   const [data, setData] = useState([]);
@@ -44,9 +45,9 @@ function Settings() {
   });
 
   return (
-    <div>
+    <div id="top">
       <h1>Fridge Settings</h1>
-      <div>
+      <div id="filter-container">
         <label htmlFor="column-select">Filter By: </label>
         <select
           id="column-select"
@@ -63,9 +64,6 @@ function Settings() {
             </option>
           ))}
         </select>
-      </div>
-      <div>
-        <label htmlFor="filter">Filter: </label>
         <input
           type="text"
           id="filter"
