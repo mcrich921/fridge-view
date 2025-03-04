@@ -4,7 +4,7 @@ import api from "../api";
 function Settings() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("");
-  const [currFilter, setCurrFilter] = useState("fridge_id");
+  const [currFilter, setCurrFilter] = useState("");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -28,23 +28,35 @@ function Settings() {
   };
 
   const filteredData = data.filter((item) => {
-    return headers.some((header) => {
-      // case-insensitive matching
-      return String(item[header]).toLowerCase().includes(filter.toLowerCase());
-    });
+    if (!currFilter)
+      // Filter by all data if no filter selected
+      return headers.some((header) => {
+        // case-insensitive matching
+        return String(item[header])
+          .toLowerCase()
+          .includes(filter.toLowerCase());
+      });
+
+    // Otherwise filter by current column
+    return String(item[currFilter])
+      .toLowerCase()
+      .includes(filter.toLowerCase());
   });
 
   return (
     <div>
       <h1>Fridge Settings</h1>
       <div>
-        <label htmlFor="column-select">Select Column:</label>
+        <label htmlFor="column-select">Filter By: </label>
         <select
           id="column-select"
           value={currFilter}
           onChange={handleFilterColChange}
         >
-          {/* Add options to filter by all headers */}
+          {/* Add options to filter by all headers and no header */}
+          <option key="" value={""}>
+            All
+          </option>
           {headers.map((header) => (
             <option key={header} value={header}>
               {header}
@@ -53,13 +65,13 @@ function Settings() {
         </select>
       </div>
       <div>
-        <label htmlFor="filter">Filter:</label>
+        <label htmlFor="filter">Filter: </label>
         <input
           type="text"
           id="filter"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Search by any column"
+          placeholder="Filter Value"
         />
       </div>
       <table>
