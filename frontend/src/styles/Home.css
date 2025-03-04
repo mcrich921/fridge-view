@@ -1,0 +1,13 @@
+a {
+  text-decoration: none;
+  color: rgb(0 181 173);
+  font-size: 100px;
+  font-family: Arial;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+a:hover {
+  color: rgb(0, 153, 146);
+}
