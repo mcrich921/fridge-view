@@ -16,6 +16,11 @@ div {
   border-radius: 8px;
 }
 
+.settings {
+  height: 500px;
+  width: 650px;
+}
+
 #filter-container {
   display: flex;
   align-items: center;

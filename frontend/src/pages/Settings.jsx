@@ -45,7 +45,7 @@ function Settings() {
   });
 
   return (
-    <div>
+    <div className="settings">
       <h1>Fridge Settings</h1>
       <div id="filter-container">
         <label htmlFor="column-select">Filter By: </label>
